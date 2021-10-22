@@ -118,3 +118,28 @@ pak_error:
   fclose(fp);
   return NULL;
 }
+
+// TODO fonction qui liste les fichiers présents
+// dans les différents .PAK
+
+// will be used to read file from a specific pak file
+void* pak_get_file(FILE* fp, pak_file_t* file, const char* filename)
+{
+  if (!strcmp(file->name, filename))
+  {
+    if (fseek(fp, file->offset, SEEK_SET) != 0)
+      return NULL;
+
+    void* buffer = malloc(file->size);
+    if (!buffer)
+      return NULL;
+
+    if (!fread(buffer, file->size, 1, fp))
+    {
+      free(buffer);
+      return NULL;
+    }
+
+    return buffer;
+  }
+}
