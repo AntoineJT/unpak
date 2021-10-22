@@ -15,7 +15,7 @@ pak_files_t* pak_preload_files(const char* pak_filename)
   if (!fp)
     return NULL;
 
-  pak_header_t pak_header;
+  pak_header_t pak_header = { .offset = 0, .size = 0 };
   if (!fread(&pak_header, sizeof(pak_header), 1, fp))
     goto pak_error;
   if (memcmp(pak_header.id, "PACK", 4) != 0)
@@ -31,9 +31,13 @@ pak_files_t* pak_preload_files(const char* pak_filename)
 
   int index = 0; // keep track of it in case of failure
   pak_file_t** pak_files = malloc(num_files * sizeof(pak_file_t*));
+  if (!pak_files)
+      goto pak_error;
   for (; index < num_files; ++index)
   {
     pak_file_t* pak_file = malloc(sizeof(pak_file_t));
+    if (!pak_file)
+        goto pak_preload_error;
     if (!fread(pak_file, sizeof(pak_file_t), 1, fp)) {
       free(pak_file);
       goto pak_preload_error;
@@ -59,11 +63,8 @@ pak_error:
   return NULL;
 }
 
-// TODO fonction qui liste les fichiers présents
-// dans les différents .PAK
-
 // will be used to read file from a specific pak file
-void* pak_get_file(FILE* fp, pak_file_t* file, const char* filename)
+void* pak_get_file(FILE* fp, const pak_file_t* file, const char* filename)
 {
   if (!strcmp(file->name, filename))
   {

@@ -22,7 +22,8 @@ int main()
     auto pPak = pak_preload_files(filename);
     RT_ASSERT(pPak, "PAK0.PAK must exists!");
     for (int i = 0; i < pPak->size; ++i) {
-        auto file = pPak->files[i];
-        std::cout << file->name << "\n";
+        auto pFile = pPak->files[i];
+        std::cout << pFile->name << "\n";
+
     }
 }
