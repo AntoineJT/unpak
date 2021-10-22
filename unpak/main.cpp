@@ -16,7 +16,7 @@ void rt_assert(const bool b_cond, const char* cond, const char* msg, const int l
 
 int main()
 {
-    const char* filename = "PAK1.PAK";
+    const char* filename = "PAK0.PAK";
     std::cout << "Test with PAK0.PAK" << std::endl;
 
     auto pPak = pak_preload_files(filename);
