@@ -2,6 +2,10 @@
 
 #include <stdio.h>
 
+#ifdef __cplusplus
+extern "C"{
+#endif
+
 typedef struct pak_header_s
 {
   char id[4];
@@ -24,3 +28,7 @@ typedef struct pak_files_s
 
 pak_files_t* pak_preload_files(const char* pak_filename);
 void* pak_get_file(FILE* fp, pak_file_t* file, const char* filename);
+
+#ifdef __cplusplus
+}
+#endif
