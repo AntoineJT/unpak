@@ -13,6 +13,14 @@ if is_mode("release") then
     set_optimize("fastest")
 end
 
+target("common")
+    set_kind("static")
+    set_languages("c89", "cxx17")
+
+    add_files("common/**.c", "common/**.cpp")
+    add_headerfiles("common/**.h")
+    add_includedirs("common/include/", {public = true})
+
 target("cpak")
     set_kind("static")
     set_languages("c89")
@@ -21,6 +29,8 @@ target("cpak")
     add_headerfiles("cpak/**.h")
     add_includedirs("cpak/include/", {public = true})
 
+    add_deps("common")
+
 target("unpak")
     set_kind("binary")
     set_languages("cxx17")
@@ -28,4 +38,4 @@ target("unpak")
     add_files("unpak/**.cpp")
     add_headerfiles("unpak/**.hpp")
 
-    add_deps("cpak")
+    add_deps("common", "cpak")

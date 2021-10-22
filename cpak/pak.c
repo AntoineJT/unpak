@@ -2,6 +2,7 @@
 // implementation found at
 // https://quakewiki.org/wiki/.pak
 #include "include/pak.h"
+#include "my_asserts.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -72,8 +73,7 @@ void* pak_get_file(FILE* fp, const pak_file_t* file, const char* filename)
       return NULL;
 
     void* buffer = malloc(file->size);
-    if (!buffer)
-      return NULL;
+    RT_ASSERT(buffer, "Memory allocation failure");
 
     if (!fread(buffer, file->size, 1, fp))
     {
