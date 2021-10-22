@@ -10,9 +10,8 @@
 // TODO Implement LittleLong to convert endianness if needed
 #define LittleLong(x) x
 
-pak_files_t* pak_preload_files(const char* pak_filename)
+pak_files_t* pak_preload_files(FILE* fp)
 {
-  FILE* fp = fopen(pak_filename, "rb");
   if (!fp)
     return NULL;
 
@@ -67,20 +66,17 @@ pak_error:
 // will be used to read file from a specific pak file
 void* pak_get_file(FILE* fp, const pak_file_t* file, const char* filename)
 {
-  if (!strcmp(file->name, filename))
+  if (fseek(fp, file->offset, SEEK_SET) != 0)
+    return NULL;
+
+  void* buffer = malloc(file->size);
+  RT_ASSERT(buffer, "Memory allocation failure");
+
+  if (!fread(buffer, file->size, 1, fp))
   {
-    if (fseek(fp, file->offset, SEEK_SET) != 0)
-      return NULL;
-
-    void* buffer = malloc(file->size);
-    RT_ASSERT(buffer, "Memory allocation failure");
-
-    if (!fread(buffer, file->size, 1, fp))
-    {
-      free(buffer);
-      return NULL;
-    }
-
-    return buffer;
+    free(buffer);
+    return NULL;
   }
+
+  return buffer;
 }

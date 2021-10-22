@@ -26,8 +26,8 @@ typedef struct pak_files_s
   pak_file_t** files;
 } pak_files_t;
 
-pak_files_t* pak_preload_files(const char* pak_filename);
-void* pak_get_file(FILE* fp, const pak_file_t* file, const char* filename);
+pak_files_t* pak_preload_files(FILE* fp);
+void* pak_get_file(FILE* fp, const pak_file_t* file);
 
 #ifdef __cplusplus
 }
