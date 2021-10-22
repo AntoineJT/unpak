@@ -1,7 +1,7 @@
 #include <iostream>
 
-#include "pak.h"
-#include "my_asserts.h"
+#include "cpak/pak.h"
+#include "common/my_asserts.h"
 
 int main()
 {

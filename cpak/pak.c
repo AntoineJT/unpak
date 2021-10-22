@@ -1,8 +1,8 @@
 // Based on a public domain
 // implementation found at
 // https://quakewiki.org/wiki/.pak
-#include "include/pak.h"
-#include "my_asserts.h"
+#include "include/cpak/pak.h"
+#include "common/my_asserts.h"
 
 #include <stdlib.h>
 #include <string.h>
