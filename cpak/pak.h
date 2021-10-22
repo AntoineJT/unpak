@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdio.h>
+
 typedef struct pak_header_s
 {
   char id[4];
@@ -16,10 +18,12 @@ typedef struct pak_file_s
 
 typedef struct pak_files_s
 {
-  pak_file_t** files;
   int size;
+  pak_file_t** files;
 } pak_files_t;
 
+#if 0
 void* pak_load_file(const char* pak_filename, const char* filename, int* out_filesize);
+#endif
 pak_files_t* pak_preload_files(const char* pak_filename);
 void* pak_get_file(FILE* fp, pak_file_t* file, const char* filename);

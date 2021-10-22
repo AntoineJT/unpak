@@ -3,13 +3,13 @@
 // https://quakewiki.org/wiki/.pak
 #include "pak.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 // TODO Implement LittleLong to convert endianness if needed
-#define LittleLong(x) NULL
+#define LittleLong(x) x
 
+#if 0
 /* pak_filename : the os filename of the .pak file */
 /* filename     : the name of the file you're trying to load from the .pak file (remember to use forward slashes for the path) */
 /* out_filesize : if not null, the loaded file's size will be returned here */
@@ -68,6 +68,7 @@ pak_error:
   fclose(fp);
   return NULL;
 }
+#endif
 
 pak_files_t* pak_preload_files(const char* pak_filename)
 {
@@ -99,8 +100,8 @@ pak_files_t* pak_preload_files(const char* pak_filename)
       goto pak_preload_error;
     }
 
-    pak_file->offset = LittleLong(pak_file.offset);
-    pak_file->size = LittleLong(pak_file.size);
+    pak_file->offset = LittleLong(pak_file->offset);
+    pak_file->size = LittleLong(pak_file->size);
     pak_files[index] = pak_file;
   }
   pak_files_t* pak_preload = malloc(sizeof(pak_files_t));
