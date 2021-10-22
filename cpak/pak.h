@@ -14,4 +14,11 @@ typedef struct pak_file_s
   int size;
 } pak_file_t;
 
+typedef struct pak_files_s
+{
+  pak_file_t** files;
+  int size;
+} pak_files_t;
+
 void* pak_load_file(const char* pak_filename, const char* filename, int* out_filesize);
+pak_files_t* pak_preload_files(const char* pak_filename);

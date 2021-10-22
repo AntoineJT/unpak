@@ -1,7 +1,7 @@
 set_project("xtractpak")
 set_version("0.0.0")
 
-add_rules("mode.debug", "mode.release")
+add_rules("mode.debug", "mode.release", "mode.asan")
 
 if is_mode("release") then
     set_optimize("fastest")
