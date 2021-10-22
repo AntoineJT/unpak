@@ -13,11 +13,13 @@ target("cpak")
 
     add_files("cpak/**.c")
     add_headerfiles("cpak/**.h")
+    add_includedirs("cpak/include/", {public = true})
 
---[[
 target("unpak")
     set_kind("binary")
+    set_languages("cxx17")
 
     add_files("unpak/**.cpp")
-    add_headerfiles("unpak/**.hpp", "unpak/**.h")
-]]
+    add_headerfiles("unpak/**.hpp")
+
+    add_deps("cpak")

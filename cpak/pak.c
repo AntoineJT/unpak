@@ -1,7 +1,7 @@
 // Based on a public domain
 // implementation found at
 // https://quakewiki.org/wiki/.pak
-#include "pak.h"
+#include "include/pak.h"
 
 #include <stdlib.h>
 #include <string.h>
