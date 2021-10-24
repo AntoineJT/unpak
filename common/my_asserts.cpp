@@ -15,7 +15,7 @@ void cpp_rt_assert(const bool b_cond, const char* cond, const char* msg, const i
 void cpp_rt_ensure(const bool b_cond, const char* msg)
 {
     if (!b_cond) {
-        std::cerr << msg << std::endl;
+        std::cout << msg << std::endl;
         exit(EXIT_FAILURE);
     }
 }
