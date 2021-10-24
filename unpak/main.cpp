@@ -14,7 +14,7 @@ int main()
     auto pPak = pak_preload_files(fp);
     if (!pPak) {
         fclose(fp);
-        RT_ASSERT(pPak, "PAK0.PAK must exists!"); // terminate prog
+        RT_ASSERT(pPak, "PAK0.PAK must be a valid PAK file!"); // terminate prog
     }
     for (int i = 0; i < pPak->size; ++i) {
         auto pFile = pPak->files[i];
