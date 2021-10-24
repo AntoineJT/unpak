@@ -6,9 +6,11 @@
 int main()
 {
     const char* filename = "PAK0.PAK";
-    std::cout << "Test with PAK0.PAK" << std::endl;
+    std::cout << "Test with " << filename << std::endl;
 
     FILE* fp = fopen(filename, "rb");
+    RT_ENSURE(fp, "File not found!");
+
     auto pPak = pak_preload_files(fp);
     if (!pPak) {
         fclose(fp);
@@ -19,4 +21,5 @@ int main()
         std::cout << pFile->name << "\n";
     }
     fclose(fp);
+    pak_destroy_pak_files_t(pPak);
 }

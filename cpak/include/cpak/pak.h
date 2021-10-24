@@ -28,6 +28,7 @@ typedef struct pak_files_s
 
 pak_files_t* pak_preload_files(FILE* fp);
 void* pak_get_file(FILE* fp, const pak_file_t* file);
+void pak_destroy_pak_files_t(pak_files_t* pak_files);
 
 #ifdef __cplusplus
 }

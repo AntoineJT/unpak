@@ -11,3 +11,11 @@ void cpp_rt_assert(const bool b_cond, const char* cond, const char* msg, const i
         exit(EXIT_FAILURE);
     }
 }
+
+void cpp_rt_ensure(const bool b_cond, const char* msg)
+{
+    if (!b_cond) {
+        std::cerr << msg << std::endl;
+        exit(EXIT_FAILURE);
+    }
+}

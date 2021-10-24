@@ -6,9 +6,17 @@
 void c_rt_assert(const int b_cond, const char* cond, const char* msg, const int line, const char* file)
 {
     if (!b_cond) {
-        printf("assertion failed (%s@%d): "
+        fprintf(stderr, "assertion failed (%s@%d): "
             "\n\t%s"
             "\n>\t%s", file, line, msg, cond);
+        exit(EXIT_FAILURE);
+    }
+}
+
+void c_rt_ensure(const int b_cond, const char* msg)
+{
+    if (!b_cond) {
+        fputs(msg, stderr);
         exit(EXIT_FAILURE);
     }
 }

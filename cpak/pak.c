@@ -10,6 +10,14 @@
 // TODO Implement LittleLong to convert endianness if needed
 #define LittleLong(x) x
 
+static inline void pak_destroy_pak_files_t_sz(pak_files_t* pak_files, const int size)
+{
+    for (int i = 0; i < size; ++i) {
+        free(pak_files->files[i]);
+    }
+    free(pak_files);
+}
+
 pak_files_t* pak_preload_files(FILE* fp)
 {
   if (!fp)
@@ -53,10 +61,7 @@ pak_files_t* pak_preload_files(FILE* fp)
   return pak_preload;
 
 pak_preload_error:
-  for (int i = 0; i <= index; ++i) {
-    free(pak_files[i]);
-  }
-  free(pak_files);
+  pak_destroy_pak_files_t_sz(pak_files, index + 1);
 
 pak_error:
   fclose(fp);
@@ -79,4 +84,9 @@ void* pak_get_file(FILE* fp, const pak_file_t* file, const char* filename)
   }
 
   return buffer;
+}
+
+void pak_destroy_pak_files_t(pak_files_t* pak_files)
+{
+    pak_destroy_pak_files_t_sz(pak_files, pak_files->size);
 }
