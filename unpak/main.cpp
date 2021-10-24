@@ -1,22 +1,21 @@
 #include <iostream>
 
 #include "cpak/pak.h"
-
-#define RT_ASSERT_FUNC
 #include "common/my_asserts.h"
 
 int main()
 {
-    const char* filename = "unpak.exe";
+    const char* filename = "PAK0.PAK";
     std::cout << "Test with " << filename << std::endl;
 
     FILE* fp = fopen(filename, "rb");
     RT_ENSURE(fp, "File not found!");
 
     auto pPak = pak_preload_files(fp);
-    RT_ASSERT_BEGIN(pPak, "PAK0.PAK must be a valid PAK file!")
+    if (!pPak) {
         fclose(fp);
-    RT_ASSERT_END()
+        RT_ASSERT(pPak, "PAK0.PAK must exists!"); // terminate prog
+    }
     for (int i = 0; i < pPak->size; ++i) {
         auto pFile = pPak->files[i];
         std::cout << pFile->name << "\n";
