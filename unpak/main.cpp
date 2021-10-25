@@ -1,15 +1,17 @@
 #include <iostream>
 
+// #define RT_ENSURE_PREFIX "Custom prefix: "
+
 #include "cpak/pak.h"
 #include "common/my_asserts.h"
 
 int main()
 {
-	const std::string filename = "PAK0.PAK";
+	const std::string filename = "freedoom1.wad";
 	std::cout << "Test with " << filename << std::endl;
 
 	FILE* fp = fopen(filename.c_str(), "rb");
-	RT_ENSURE(fp, filename + "File not found!");
+	RT_ENSURE(fp, "File '" + filename + "' not found!");
 
 	auto pPak = pak_preload_files(fp);
 	RT_ENSURE_BEGIN(pPak, filename + " must be a valid PAK file!")

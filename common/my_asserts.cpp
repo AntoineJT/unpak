@@ -12,10 +12,10 @@ void cpp_rt_assert(const bool b_cond, const char* cond, const std::string_view m
 	}
 }
 
-void cpp_rt_ensure(const bool b_cond, const std::string_view msg)
+void cpp_rt_ensure(const bool b_cond, const std::string_view prefix, const std::string_view msg)
 {
 	if (!b_cond) {
-		std::cerr << msg << std::endl;
+		std::cerr << std::string(prefix) << msg << std::endl;
 		exit(EXIT_FAILURE);
 	}
 }

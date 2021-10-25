@@ -13,10 +13,10 @@ void c_rt_assert(const int b_cond, const char* cond, const char* msg, const int 
 	}
 }
 
-void c_rt_ensure(const int b_cond, const char* msg)
+void c_rt_ensure(const int b_cond, const char* prefix, const char* msg)
 {
 	if (!b_cond) {
-		fputs(msg, stderr);
+		fprintf(stderr, "%s%s\n", prefix, msg);
 		exit(EXIT_FAILURE);
 	}
 }
