@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-void cpp_rt_assert(const bool b_cond, const char* cond, const char* msg, const int line, const char* file)
+void cpp_rt_assert(const bool b_cond, const char* cond, const std::string_view msg, const int line, const char* file)
 {
     if (!b_cond) {
         std::cerr << "assertion failed (" << file << "@" << line << "): "
@@ -12,7 +12,7 @@ void cpp_rt_assert(const bool b_cond, const char* cond, const char* msg, const i
     }
 }
 
-void cpp_rt_ensure(const bool b_cond, const char* msg)
+void cpp_rt_ensure(const bool b_cond, const std::string_view msg)
 {
     if (!b_cond) {
         std::cerr << msg << std::endl;

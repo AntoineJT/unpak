@@ -75,7 +75,7 @@ void* pak_get_file(FILE* fp, const pak_file_t* file, const char* filename)
     return NULL;
 
   void* buffer = malloc(file->size);
-  RT_ASSERT(buffer, "Memory allocation failure");
+  RT_ENSURE(buffer, "Memory allocation failed for pak file reading");
 
   if (!fread(buffer, file->size, 1, fp))
   {
