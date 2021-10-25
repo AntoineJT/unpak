@@ -26,9 +26,17 @@ typedef struct pak_files_s
   pak_file_t** files;
 } pak_files_t;
 
+typedef struct pak_file_content_s
+{
+    int size;
+    void* content;
+} pak_file_content_t;
+
 pak_files_t* pak_preload_files(FILE* fp);
-void* pak_get_file(FILE* fp, const pak_file_t* file);
+pak_file_content_t* pak_get_file(FILE* fp, const pak_file_t* file);
 void pak_destroy_pak_files_t(pak_files_t* pak_files);
+void pak_destroy_pak_file_content_t(pak_file_content_t* pak_file_content);
+void pak_write_content_to(const char* path, const pak_file_content_t* content);
 
 #ifdef __cplusplus
 }

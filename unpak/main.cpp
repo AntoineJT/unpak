@@ -19,6 +19,7 @@ int main()
         auto pFile = pPak->files[i];
         std::cout << pFile->name << "\n";
     }
+    pak_write_content_to("C:\\Fichiers\\GitHub\\pak-extractor\\test\\r_item1.wav", pak_get_file(fp, pPak->files[0]));
     fclose(fp);
     pak_destroy_pak_files_t(pPak);
 }

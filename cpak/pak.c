@@ -69,24 +69,46 @@ pak_error:
 }
 
 // will be used to read file from a specific pak file
-void* pak_get_file(FILE* fp, const pak_file_t* file, const char* filename)
+pak_file_content_t* pak_get_file(FILE* fp, const pak_file_t* file, const char* filename)
 {
   if (fseek(fp, file->offset, SEEK_SET) != 0)
     return NULL;
 
+  pak_file_content_t* fcont = malloc(sizeof(pak_file_content_t));
   void* buffer = malloc(file->size);
-  RT_ENSURE(buffer, "Memory allocation failed for pak file reading");
+  RT_ENSURE(buffer, "Memory allocation failed for in pak file reading (buffer)");
+  RT_ENSURE(fcont, "Memory allocation failed for in pak file reading (fcont)");
 
   if (!fread(buffer, file->size, 1, fp))
   {
     free(buffer);
+    free(fcont);
     return NULL;
   }
 
-  return buffer;
+  fcont->content = buffer;
+  fcont->size = file->size;
+  return fcont;
 }
 
 void pak_destroy_pak_files_t(pak_files_t* pak_files)
 {
     pak_destroy_pak_files_t_sz(pak_files, pak_files->size);
+}
+
+void pak_destroy_pak_file_content_t(pak_file_content_t* pak_file_content)
+{
+    free(pak_file_content->content);
+    free(pak_file_content);
+}
+
+// TODO move it to some util source file?
+// TODO return a bool?
+void pak_write_content_to(const char* path, const pak_file_content_t* content)
+{
+    FILE* fp = fopen(path, "wb");
+    // TODO improve it by supporting varargs?
+    RT_ENSURE(fp, "Failed to open inner file!");
+    RT_ENSURE(fwrite(content->content, content->size, 1, fp) == 1, "Failed to write file on disk!");
+    fclose(fp);
 }
