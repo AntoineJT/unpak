@@ -12,10 +12,9 @@ int main()
     RT_ENSURE(fp, "File not found!");
 
     auto pPak = pak_preload_files(fp);
-    if (!pPak) {
+    RT_ENSURE_BEGIN(pPak, "PAK0.PAK must be a valid PAK file!")
         fclose(fp);
-        RT_ASSERT(pPak, "PAK0.PAK must be a valid PAK file!"); // terminate prog
-    }
+    RT_ENSURE_END()
     for (int i = 0; i < pPak->size; ++i) {
         auto pFile = pPak->files[i];
         std::cout << pFile->name << "\n";
