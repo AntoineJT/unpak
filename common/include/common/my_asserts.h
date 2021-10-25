@@ -19,11 +19,11 @@ void cpp_rt_assert(const bool b_cond, const char* cond, const std::string_view m
 void cpp_rt_ensure(const bool b_cond, const std::string_view msg);
 
 #define RT_ENSURE_BEGIN(cond, msg) \
-    if (!(cond)) { \
-        std::cerr << (msg) << std::endl;
+	if (!(cond)) { \
+		std::cerr << (msg) << std::endl;
 #define RT_ENSURE_END() \
-        exit(EXIT_FAILURE); \
-    }
+		exit(EXIT_FAILURE); \
+	}
 #else
 // C
 #include <stdio.h>
@@ -34,9 +34,9 @@ void c_rt_assert(const int b_cond, const char* cond, const char* msg, const int 
 void c_rt_ensure(const int b_cond, const char* msg);
 
 #define RT_ENSURE_BEGIN(cond, msg) \
-    if (!(cond)) { \
-        fputs((msg), stderr);
+	if (!(cond)) { \
+		fputs((msg), stderr);
 #define RT_ENSURE_END() \
-        exit(EXIT_FAILURE); \
-    }
+		exit(EXIT_FAILURE); \
+	}
 #endif
