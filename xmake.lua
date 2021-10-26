@@ -15,7 +15,10 @@ end
 
 target("common")
     set_kind("static")
-    set_languages("c89", "cxx17")
+    -- c11 to support c++ style comment
+    -- and msvc, because msvc does
+    -- not support c99
+    set_languages("c11", "cxx17")
 
     add_files("common/**.c", "common/**.cpp")
     add_headerfiles("common/**.h")
@@ -23,7 +26,7 @@ target("common")
 
 target("cpak")
     set_kind("static")
-    set_languages("c89")
+    set_languages("c11")
 
     add_files("cpak/**.c")
     add_headerfiles("cpak/**.h")

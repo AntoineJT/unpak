@@ -69,15 +69,15 @@ pak_error:
 }
 
 // will be used to read file from a specific pak file
-pak_file_content_t* pak_get_file(FILE* fp, const pak_file_t* file, const char* filename)
+pak_file_content_t* pak_get_file(FILE* fp, const pak_file_t* file)
 {
 	if (fseek(fp, file->offset, SEEK_SET) != 0)
 		return NULL;
 
 	pak_file_content_t* fcont = malloc(sizeof(pak_file_content_t));
 	void* buffer = malloc(file->size);
-	RT_ENSURE(buffer, "Memory allocation failed for in pak file reading (buffer)");
-	RT_ENSURE(fcont, "Memory allocation failed for in pak file reading (fcont)");
+	RT_ENSURE(buffer, "Memory allocation failed for in pak file reading (buffer)", "");
+	RT_ENSURE(fcont, "Memory allocation failed for in pak file reading (fcont)", "");
 
 	if (!fread(buffer, file->size, 1, fp)) {
 		free(buffer);
