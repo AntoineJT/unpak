@@ -14,18 +14,10 @@ void cpp_rt_assert(const bool b_cond, const char* cond, const std::string_view m
 	}
 }
 
-void cpp_rt_ensure(const bool b_cond, const std::string_view prefix, const std::string_view fmt, ...)
+void cpp_rt_ensure(const bool b_cond, const std::string_view prefix, const std::string_view msg)
 {
 	if (!b_cond) {
-		const auto oPrefixStr = std::string(prefix);
-		const auto oFmtStr = std::string(fmt);
-		const auto pFmt = oFmtStr.c_str();
-		fprintf(stderr, "%s", oPrefixStr.c_str());
-		va_list args;
-		va_start(args, pFmt);
-		vfprintf(stderr, pFmt, args);
-		va_end(args);
-		fprintf(stderr, "\n");
+		std::cerr << std::string(prefix) << msg << std::endl;
 		exit(EXIT_FAILURE);
 	}
 }
