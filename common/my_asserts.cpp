@@ -1,8 +1,6 @@
 #include "include/common/my_asserts.h"
 
 #include <iostream>
-#include <cstdio>
-#include <cstdarg>
 
 void cpp_rt_assert(const bool b_cond, const char* cond, const std::string_view msg, const int line, const char* file)
 {
