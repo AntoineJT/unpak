@@ -1,4 +1,5 @@
 #include <iostream>
+#include <filesystem>
 
 // #define RT_ENSURE_PREFIX "Custom prefix: "
 
@@ -19,7 +20,16 @@ int main()
 	RT_ENSURE_END()
 	for (int i = 0; i < pPak->size; ++i) {
 		auto pFile = pPak->files[i];
-		std::cout << pFile->name << "\n";
+		// std::cout << pFile->name << "\n";
+		auto filepath = std::filesystem::absolute(std::string("test/") + pFile->name);
+		auto dirpath = filepath;
+		dirpath.remove_filename();
+		if (!std::filesystem::exists(dirpath)) {
+			std::filesystem::create_directories(dirpath);
+			// Don't know why but the return value of create_directories is silly
+			RT_ENSURE(std::filesystem::exists(dirpath), "Failed to create directories (" + dirpath.string() + ")");
+		}
+		pak_write_content_to(filepath.string().c_str(), pak_get_file(fp, pFile));
 	}
 	pak_write_content_to("C:\\Fichiers\\GitHub\\pak-extractor\\test\\r_item1.wav", pak_get_file(fp, pPak->files[0]));
 	fclose(fp);
