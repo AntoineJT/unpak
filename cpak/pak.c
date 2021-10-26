@@ -76,8 +76,8 @@ pak_file_content_t* pak_get_file(FILE* fp, const pak_file_t* file)
 
 	pak_file_content_t* fcont = malloc(sizeof(pak_file_content_t));
 	void* buffer = malloc(file->size);
-	RT_ENSURE(buffer, "Memory allocation failed for in pak file reading (buffer)", "");
-	RT_ENSURE(fcont, "Memory allocation failed for in pak file reading (fcont)", "");
+	RT_ENSURE(buffer, "Memory allocation failed for in pak file reading (buffer)");
+	RT_ENSURE(fcont, "Memory allocation failed for in pak file reading (fcont)");
 
 	if (!fread(buffer, file->size, 1, fp)) {
 		free(buffer);
@@ -105,7 +105,7 @@ void pak_destroy_pak_file_content_t(pak_file_content_t* pak_file_content)
 void pak_write_content_to(const char* path, const pak_file_content_t* content)
 {
 	FILE* fp = fopen(path, "wb");
-	RT_ENSURE(fp, "Failed to open '%s' file!", path);
-	RT_ENSURE(fwrite(content->content, content->size, 1, fp) == 1, "Failed to write file '%s' on disk!", path);
+	RT_ENSURE_VA(fp, "Failed to open '%s' file!", path);
+	RT_ENSURE_VA(fwrite(content->content, content->size, 1, fp) == 1, "Failed to write file '%s' on disk!", path);
 	fclose(fp);
 }
