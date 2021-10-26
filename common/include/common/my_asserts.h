@@ -21,8 +21,8 @@
 
 #define RT_ASSERT(cond, msg) cpp_rt_assert((cond), #cond, (msg), __LINE__, __FILE__)
 void cpp_rt_assert(const bool b_cond, const char* cond, const std::string_view msg, const int line, const char* file);
-#define RT_ENSURE(cond, msg) cpp_rt_ensure((cond), RT_ENSURE_PREFIX, (msg))
-void cpp_rt_ensure(const bool b_cond, const std::string_view prefix, const std::string_view msg);
+#define RT_ENSURE(cond, fmt, ...) cpp_rt_ensure((cond), RT_ENSURE_PREFIX, (fmt), __VA_ARGS__)
+void cpp_rt_ensure(const bool b_cond, const std::string_view prefix, const std::string_view fmt, ...);
 
 #define RT_ENSURE_BEGIN(cond, msg) \
 	if (!(cond)) { \
@@ -36,8 +36,8 @@ void cpp_rt_ensure(const bool b_cond, const std::string_view prefix, const std::
 
 #define RT_ASSERT(cond, msg) c_rt_assert((cond), #cond, (msg), __LINE__, __FILE__)
 void c_rt_assert(const int b_cond, const char* cond, const char* msg, const int line, const char* file);
-#define RT_ENSURE(cond, msg) c_rt_ensure((cond), RT_ENSURE_PREFIX, (msg))
-void c_rt_ensure(const int b_cond, const char* prefix, const char* msg);
+#define RT_ENSURE(cond, msg, ...) c_rt_ensure((cond), RT_ENSURE_PREFIX, (msg), __VA_ARGS__)
+void c_rt_ensure(const int b_cond, const char* prefix, const char* fmt, ...);
 
 #define RT_ENSURE_BEGIN(cond, msg) \
 	if (!(cond)) { \

@@ -7,7 +7,7 @@
 
 int main()
 {
-	const std::string filename = "freedoom1.wad";
+	const std::string filename = "PAK0.PAK";
 	std::cout << "Test with " << filename << std::endl;
 
 	FILE* fp = fopen(filename.c_str(), "rb");

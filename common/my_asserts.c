@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdarg.h>
 
 void c_rt_assert(const int b_cond, const char* cond, const char* msg, const int line, const char* file)
 {
@@ -13,10 +14,15 @@ void c_rt_assert(const int b_cond, const char* cond, const char* msg, const int 
 	}
 }
 
-void c_rt_ensure(const int b_cond, const char* prefix, const char* msg)
+void c_rt_ensure(const int b_cond, const char* prefix, const char* fmt, ...)
 {
 	if (!b_cond) {
-		fprintf(stderr, "%s%s\n", prefix, msg);
+		fprintf(stderr, "%s", prefix);
+		va_list args;
+		va_start(args, fmt);
+		vfprintf(stderr, fmt, args);
+		va_end(args);
+		fprintf(stderr, "\n");
 		exit(EXIT_FAILURE);
 	}
 }

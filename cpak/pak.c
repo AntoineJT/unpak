@@ -107,7 +107,7 @@ void pak_write_content_to(const char* path, const pak_file_content_t* content)
 {
 	FILE* fp = fopen(path, "wb");
 	// TODO improve it by supporting varargs?
-	RT_ENSURE(fp, "Failed to open inner file!");
-	RT_ENSURE(fwrite(content->content, content->size, 1, fp) == 1, "Failed to write file on disk!");
+	RT_ENSURE(fp, "Failed to open '%s' file!", path);
+	RT_ENSURE(fwrite(content->content, content->size, 1, fp) == 1, "Failed to write file '%s' on disk!", path);
 	fclose(fp);
 }
