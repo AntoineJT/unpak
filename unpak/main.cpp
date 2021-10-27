@@ -29,7 +29,9 @@ int main()
 			// Don't know why but the return value of create_directories is silly
 			RT_ENSURE(std::filesystem::exists(dirpath), "Failed to create directories (" + dirpath.string() + ")");
 		}
-		pak_write_content_to(filepath.string().c_str(), pak_get_file(fp, pFile));
+		auto pCont = pak_get_file(fp, pFile);
+		pak_write_content_to(filepath.string().c_str(), pCont);
+		pak_destroy_pak_file_content_t(pCont);
 	}
 	pak_write_content_to("C:\\Fichiers\\GitHub\\pak-extractor\\test\\r_item1.wav", pak_get_file(fp, pPak->files[0]));
 	fclose(fp);
