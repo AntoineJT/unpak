@@ -8,6 +8,13 @@
 #include "cpak/pak.h"
 #include "common/my_asserts.h"
 
+std::string GetExistingAbsFilePath(const std::string_view filename)
+{
+	const auto pakpath = std::filesystem::absolute(filename);
+	RT_ENSURE(std::filesystem::exists(pakpath), "Specified pakfile does not exists!");
+	return pakpath.string();
+}
+
 int main(const int argc, const char* argv[])
 {
 	TCLAP::CmdLine cmd("Quake PAK Extractor - by AntoineJT");
@@ -17,12 +24,7 @@ int main(const int argc, const char* argv[])
 	cmd.parse(argc, argv);
 
 	const std::string filename = pakfileArg.getValue();
-	std::string pakpathstr;
-	{
-		const auto pakpath = std::filesystem::absolute(filename);
-		RT_ENSURE(std::filesystem::exists(pakpath), "Specified pakfile does not exists!");
-		pakpathstr = pakpath.string();
-	}
+	std::string pakpathstr = GetExistingAbsFilePath(filename);
 
 	FILE* fp = fopen(pakpathstr.c_str(), "rb");
 	RT_ENSURE(fp, "File '" + filename + "' not found!");
