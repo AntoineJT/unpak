@@ -33,7 +33,6 @@ int main()
 		pak_write_content_to(filepath.string().c_str(), pCont);
 		pak_free_pak_file_content_t(pCont);
 	}
-	pak_write_content_to("C:\\Fichiers\\GitHub\\pak-extractor\\test\\r_item1.wav", pak_get_file(fp, pPak->files[0]));
 	fclose(fp);
 	pak_free_pak_files_t(pPak);
 }
