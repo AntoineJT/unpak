@@ -5,6 +5,8 @@ set_version("0.0.0")
 
 add_rules("mode.debug", "mode.release", "mode.asan")
 
+add_requires("tclap 1.4.0-rc1") -- latest version at the time
+
 if is_plat("linux") or is_plat("mingw") then
     add_links("stdc++fs")
 end
@@ -42,3 +44,4 @@ target("unpak")
     add_headerfiles("unpak/**.hpp")
 
     add_deps("common", "cpak")
+    add_packages("tclap")

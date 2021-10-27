@@ -1,27 +1,43 @@
 #include <iostream>
 #include <filesystem>
 
+#include <tclap/CmdLine.h>
+
 // #define RT_ENSURE_PREFIX "Custom prefix: "
 
 #include "cpak/pak.h"
 #include "common/my_asserts.h"
 
-int main()
+int main(const int argc, const char* argv[])
 {
-	const std::string filename = "PAK0.PAK";
-	std::cout << "Test with " << filename << std::endl;
+	TCLAP::CmdLine cmd("Quake PAK Extractor - by AntoineJT");
+	TCLAP::UnlabeledValueArg<std::string> pakfileArg("pakfile", "PAK file to extract", true, "PAK0.PAK", "string");
+	TCLAP::UnlabeledValueArg<std::string> destArg("dest", "Folder to extract to", true, ".", "string");
+	cmd.add(pakfileArg).add(destArg);
+	cmd.parse(argc, argv);
 
-	FILE* fp = fopen(filename.c_str(), "rb");
+	const std::string filename = pakfileArg.getValue();
+	std::string pakpathstr;
+	{
+		const auto pakpath = std::filesystem::absolute(filename);
+		RT_ENSURE(std::filesystem::exists(pakpath), "Specified pakfile does not exists!");
+		pakpathstr = pakpath.string();
+	}
+
+	FILE* fp = fopen(pakpathstr.c_str(), "rb");
 	RT_ENSURE(fp, "File '" + filename + "' not found!");
 
 	auto pPak = pak_preload_files(fp);
 	RT_ENSURE_BEGIN(pPak, filename + " must be a valid PAK file!")
 		fclose(fp);
 	RT_ENSURE_END()
+
+	const auto destpath = std::filesystem::absolute(destArg.getValue());
+	std::cout << "Extracting '" << pakpathstr << "' to '" << destpath.string() << "'" << std::endl;
 	for (int i = 0; i < pPak->size; ++i) {
-		auto pFile = pPak->files[i];
-		// std::cout << pFile->name << "\n";
-		auto filepath = std::filesystem::absolute(std::string("test/") + pFile->name);
+		const auto pFile = pPak->files[i];
+		std::cout << "> " << pFile->name << "\n";
+		const auto filepath = destpath / pFile->name;
 		auto dirpath = filepath;
 		dirpath.remove_filename();
 		if (!std::filesystem::exists(dirpath)) {
