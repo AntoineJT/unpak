@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define RT_ENSURE_PREFIX "error@cpak: "
+
 // TODO Implement LittleLong to convert endianness if needed
 #define LittleLong(x) x
 

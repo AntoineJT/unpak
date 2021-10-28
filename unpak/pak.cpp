@@ -5,8 +5,9 @@
 #include <string>
 
 #include "cpak/pak.h"
-#define RT_ENSURE_PREFIX "error@unpak: "
 #include "common/my_asserts.h"
+
+#define RT_ENSURE_PREFIX "error@unpak: "
 
 void Unpak::Pak::ExtractFileTo(const FILE* fp, const pak_files_t* pPak, const std::filesystem::path& destpath)
 {

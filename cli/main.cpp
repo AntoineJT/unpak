@@ -4,11 +4,11 @@
 
 #include <tclap/CmdLine.h>
 
-// #define RT_ENSURE_PREFIX "Custom prefix: "
-
 #include "cpak/pak.h"
 #include "common/my_asserts.h"
 #include "unpak/pak.hpp"
+
+#define RT_ENSURE_PREFIX "error@cli: "
 
 std::string GetExistingAbsFilePath(const std::string_view filename)
 {
