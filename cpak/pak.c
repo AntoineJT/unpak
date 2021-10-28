@@ -19,7 +19,7 @@ static inline void pak_free_pak_files_t_sz(pak_files_t* pak_files, const int siz
 	free(pak_files);
 }
 
-pak_files_t* pak_preload_files(FILE* fp)
+pak_files_t* pak_preload_files(const FILE* fp)
 {
 	if (!fp)
 		return NULL;
@@ -70,7 +70,7 @@ pak_error:
 }
 
 // will be used to read file from a specific pak file
-pak_file_content_t* pak_get_file(FILE* fp, const pak_file_t* file)
+pak_file_content_t* pak_get_file(const FILE* fp, const pak_file_t* file)
 {
 	if (fseek(fp, file->offset, SEEK_SET) != 0)
 		return NULL;

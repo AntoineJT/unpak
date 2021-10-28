@@ -15,6 +15,25 @@ std::string GetExistingAbsFilePath(const std::string_view filename)
 	return pakpath.string();
 }
 
+void ExtractPakFileTo(const FILE* fp, const pak_files_t* pPak, const std::filesystem::path& destpath)
+{
+	for (int i = 0; i < pPak->size; ++i) {
+		const auto pFile = pPak->files[i];
+		std::cout << "> " << pFile->name << "\n";
+		const auto filepath = destpath / pFile->name;
+		auto dirpath = filepath;
+		dirpath.remove_filename();
+		if (!std::filesystem::exists(dirpath)) {
+			std::filesystem::create_directories(dirpath);
+			// Don't know why but the return value of create_directories is silly
+			RT_ENSURE(std::filesystem::exists(dirpath), "Failed to create directories (" + dirpath.string() + ")");
+		}
+		auto pCont = pak_get_file(fp, pFile);
+		pak_write_content_to(filepath.string().c_str(), pCont);
+		pak_free_pak_file_content_t(pCont);
+	}
+}
+
 int main(const int argc, const char* argv[])
 {
 	TCLAP::CmdLine cmd("Quake PAK Extractor - by AntoineJT");
@@ -36,21 +55,7 @@ int main(const int argc, const char* argv[])
 
 	const auto destpath = std::filesystem::absolute(destArg.getValue());
 	std::cout << "Extracting '" << pakpathstr << "' to '" << destpath.string() << "'" << std::endl;
-	for (int i = 0; i < pPak->size; ++i) {
-		const auto pFile = pPak->files[i];
-		std::cout << "> " << pFile->name << "\n";
-		const auto filepath = destpath / pFile->name;
-		auto dirpath = filepath;
-		dirpath.remove_filename();
-		if (!std::filesystem::exists(dirpath)) {
-			std::filesystem::create_directories(dirpath);
-			// Don't know why but the return value of create_directories is silly
-			RT_ENSURE(std::filesystem::exists(dirpath), "Failed to create directories (" + dirpath.string() + ")");
-		}
-		auto pCont = pak_get_file(fp, pFile);
-		pak_write_content_to(filepath.string().c_str(), pCont);
-		pak_free_pak_file_content_t(pCont);
-	}
+	ExtractPakFileTo(fp, pPak, destpath);
 	fclose(fp);
 	pak_free_pak_files_t(pPak);
 }

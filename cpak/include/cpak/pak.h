@@ -36,8 +36,8 @@ typedef struct pak_file_content_s
 	void* content;
 } pak_file_content_t;
 
-pak_files_t* pak_preload_files(FILE* fp);
-pak_file_content_t* pak_get_file(FILE* fp, const pak_file_t* file);
+pak_files_t* pak_preload_files(const FILE* fp);
+pak_file_content_t* pak_get_file(const FILE* fp, const pak_file_t* file);
 void pak_free_pak_files_t(pak_files_t* pak_files);
 void pak_free_pak_file_content_t(pak_file_content_t* pak_file_content);
 void pak_write_content_to(const char* path, const pak_file_content_t* content);
