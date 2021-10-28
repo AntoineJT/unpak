@@ -1,6 +1,5 @@
 .xmake/
 .vscode/
 build/
-test/
 vsxmake*/
 *.PAK

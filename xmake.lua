@@ -37,11 +37,21 @@ target("cpak")
     add_deps("common")
 
 target("unpak")
-    set_kind("binary")
+    set_kind("static")
     set_languages("cxx17")
 
     add_files("unpak/**.cpp")
     add_headerfiles("unpak/**.hpp")
+    add_includedirs("unpak/include/", {public = true})
 
     add_deps("common", "cpak")
+
+target("cli")
+    set_kind("binary")
+    set_languages("cxx17")
+
+    add_files("cli/**.cpp")
+    add_headerfiles("cli/**.hpp")
+
+    add_deps("common", "cpak", "unpak")
     add_packages("tclap")

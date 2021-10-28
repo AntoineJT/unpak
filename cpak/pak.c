@@ -78,7 +78,9 @@ pak_file_content_t* pak_get_file(const FILE* fp, const pak_file_t* file)
 	pak_file_content_t* fcont = malloc(sizeof(pak_file_content_t));
 	RT_ENSURE(fcont, "Memory allocation failed for in pak file reading (fcont)");
 	void* buffer = malloc(file->size);
-	RT_ENSURE(buffer, "Memory allocation failed for in pak file reading (buffer)");
+	RT_ENSURE_BEGIN(buffer, "Memory allocation failed for in pak file reading (buffer)")
+		free(fcont);
+	RT_ENSURE_END()
 
 	if (!fread(buffer, file->size, 1, fp)) {
 		free(buffer);
