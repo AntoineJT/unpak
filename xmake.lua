@@ -28,10 +28,10 @@ target("common")
 
 target("cpak")
     set_kind("static")
-    set_languages("c11")
+    set_languages("c11", "cxx17")
 
-    add_files("cpak/**.c")
-    add_headerfiles("cpak/**.h")
+    add_files("cpak/**.c", "cpak/**.cpp")
+    add_headerfiles("cpak/**.h", "cpak/**.hpp")
     add_includedirs("cpak/include/", {public = true})
 
     add_deps("common")

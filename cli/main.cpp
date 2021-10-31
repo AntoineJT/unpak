@@ -4,7 +4,7 @@
 
 #include <tclap/CmdLine.h>
 
-#include "cpak/pak.h"
+#include "cpak/cxx/pak.hpp"
 #include "common/my_asserts.h"
 #include "unpak/pak.hpp"
 
@@ -31,14 +31,13 @@ int main(const int argc, const char* argv[])
 	FILE* fp = fopen(pakpathstr.c_str(), "rb");
 	RT_ENSURE(fp, "File '" + filename + "' not found!");
 
-	auto pPak = pak_preload_files(fp);
-	RT_ENSURE_BEGIN(pPak, filename + " must be a valid PAK file!")
+	auto pak = CPak::Pak::Files::Files(fp);
+	RT_ENSURE_BEGIN(pak.IsValid(), filename + " must be a valid PAK file!")
 		fclose(fp);
 	RT_ENSURE_END()
 
 	const auto destpath = std::filesystem::absolute(destArg.getValue());
 	std::cout << "Extracting '" << pakpathstr << "' to '" << destpath.string() << "'" << std::endl;
-	Unpak::Pak::ExtractFileTo(fp, pPak, destpath);
+	Unpak::Pak::ExtractFileTo(fp, pak, destpath);
 	fclose(fp);
-	pak_free_pak_files_t(pPak);
 }

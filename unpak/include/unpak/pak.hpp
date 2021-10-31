@@ -1,8 +1,8 @@
 #pragma once
 
 #include <filesystem>
-#include "cpak/pak.h"
+#include "cpak/cxx/pak.hpp"
 
 namespace Unpak::Pak {
-    void ExtractFileTo(const FILE* fp, const pak_files_t* pPak, const std::filesystem::path& destpath);
+    void ExtractFileTo(const FILE* fp, const CPak::Pak::Files& pak, const std::filesystem::path& destpath);
 }
