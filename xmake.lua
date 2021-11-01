@@ -49,6 +49,7 @@ target("unpak")
 target("cli")
     set_kind("binary")
     set_languages("cxx17")
+    set_basename("unpak")
 
     add_files("cli/**.cpp")
     add_headerfiles("cli/**.hpp")

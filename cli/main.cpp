@@ -19,7 +19,7 @@ std::string GetExistingAbsFilePath(const std::string_view filename)
 
 int main(const int argc, const char* argv[])
 {
-	TCLAP::CmdLine cmd("Quake PAK Extractor - by AntoineJT");
+	TCLAP::CmdLine cmd("Quake PAK Extractor - by Antoine James Tournepiche (https://github.com/AntoineJT/unpak)");
 	TCLAP::UnlabeledValueArg<std::string> pakfileArg("pakfile", "PAK file to extract", true, "PAK0.PAK", "string");
 	TCLAP::UnlabeledValueArg<std::string> destArg("dest", "Folder to extract to", true, ".", "string");
 	cmd.add(pakfileArg).add(destArg);
