@@ -12,8 +12,8 @@ namespace CPak::Pak {
         pak_file_content_t* m_data;
 
     public:
-        FileContent::FileContent(const FILE* fp, const pak_file_t* pFile);
-        FileContent::~FileContent();
+        FileContent(const FILE* fp, const pak_file_t* pFile);
+        ~FileContent();
 
         inline bool IsValid() const {
             return m_data != nullptr;
