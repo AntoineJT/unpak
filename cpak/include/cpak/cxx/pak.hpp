@@ -12,8 +12,15 @@ namespace CPak::Pak {
         pak_file_content_t* m_data;
 
     public:
-        FileContent(const FILE* fp, const pak_file_t* pFile);
-        ~FileContent();
+        inline FileContent(const FILE* fp, const pak_file_t* pFile)
+            : m_fp(fp)
+        {
+            m_data = pak_get_file(m_fp, pFile);
+        }
+        inline ~FileContent()
+        {
+            pak_free_pak_file_content_t(m_data);
+        }
 
         inline bool IsValid() const {
             return m_data != nullptr;
@@ -28,8 +35,13 @@ namespace CPak::Pak {
         pak_files_t* m_files;
 
     public:
-        explicit Files(const FILE* fp);
-        ~Files();
+        explicit inline Files(const FILE* fp)
+            : m_fp(fp), m_files(pak_preload_files(fp))
+        {}
+        inline ~Files()
+        {
+            pak_free_pak_files_t(m_files);
+        }
 
         inline bool IsValid() const {
             return m_files != nullptr;
